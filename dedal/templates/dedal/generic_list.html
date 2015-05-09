@@ -1,0 +1,18 @@
+{% extends 'dedal/base.html' %}
+
+{% load i18n dedal_tags %}
+
+{% block content %}
+	<ul>
+		{% for object in object_list %}
+			<li>
+				<a href="{% crud object 'read' %}">{{ object }}</a>
+				<a href="{% crud object 'update' %}">{% trans 'Update' %}</a>
+				<a href="{% crud object 'delete' %}">{% trans 'Delete' %}</a>
+			</li>
+		{% empty %}
+			<p>Nothing to display.</p>
+		{% endfor %}
+		<a href="{% crud model 'create' %}">{% blocktrans %}Create {{ verbose_name }}{% endblocktrans %}</a>
+	</ul>
+{% endblock %}

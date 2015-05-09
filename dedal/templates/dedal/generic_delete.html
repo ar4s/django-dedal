@@ -1,0 +1,11 @@
+{% extends 'dedal/base.html' %}
+
+{% load i18n dedal_tags %}
+
+{% block content %}
+	<form method="POST">
+		{% csrf_token %}
+		{% trans "Are you sure?" %}
+		<button>{% trans "Yes" %}</button> <a href="{% crud object 'read' %}">{% trans "No" %}</a>
+	</form>
+{% endblock %}
