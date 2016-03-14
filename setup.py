@@ -4,14 +4,12 @@
 import os
 import sys
 
-import dedal
+from dedal.version import __version__ as version
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
-
-version = dedal.__version__
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -20,8 +18,21 @@ if sys.argv[-1] == 'publish':
     print("  git push --tags")
     sys.exit()
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+
+def read(filename):
+    with open(filename) as f:
+        return f.read()
+
+readme = read('README.rst')
+history = read('HISTORY.rst').replace('.. :changelog:', '')
+requirements = [
+    'django>=1.8',
+    'wheel==0.24.0',
+]
+test_requirements = [
+    'nose',
+    'django_nose',
+]
 
 setup(
     name='django-dedal',
@@ -35,8 +46,8 @@ setup(
         'dedal',
     ],
     include_package_data=True,
-    install_requires=[
-    ],
+    install_requires=requirements,
+    tests_require=requirements + test_requirements,
     license="BSD",
     zip_safe=False,
     keywords='django-dedal',

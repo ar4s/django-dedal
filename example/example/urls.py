@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-import dedal
+from dedal import site as dedal_site
 
 urlpatterns = [
-    url(r'^dedal/', include(dedal.site.urls)),
+    url(r'^dedal/', include(dedal_site.urls)),
     url(r'^admin/', include(admin.site.urls)),
 ]

@@ -126,7 +126,6 @@ class DedalSite(object):
         self._register = {}
 
     def register(self, model, actions):
-        print('register', model, actions)
         self._register[model] = Dedal(model, actions)
 
     def get_urls(self):
