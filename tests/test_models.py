@@ -1,25 +1,65 @@
 # -*- coding: utf-8 -*-
-"""
-test_django-dedal
-------------
+from ddt import data, ddt, unpack
 
-Tests for `django-dedal` models module.
-"""
+from django.core.urlresolvers import reverse
+from django.test import TestCase
 
-import os
-import shutil
-import unittest
-
-from dedal import models
+from dedal import ACTIONS, ACTION_CREATE
+from dedal.site import site, Dedal
+from dedal.decorators import crud
+from dedal.exceptions import ModelIsNotInRegisterError
+from example.blog.models import Post
 
 
-class TestDedal(unittest.TestCase):
+class FooModel(object):
+    class _meta:  # noqa
+        model_name = 'foo'
 
+
+class TestDedalSiteRegistry(TestCase):
     def setUp(self):
-        pass
+        self.Model = crud(FooModel)
 
-    def test_something(self):
-        pass
+    def test_model_should_register_when_decorated(self):
+        self.assertTrue(site.is_registered(self.Model))
 
-    def tearDown(self):
-        pass
+    def test_model_should_unregister_when_registered(self):
+        self.assertTrue(site.unregister(self.Model))
+        self.assertFalse(site.is_registered(self.Model))
+
+    def test_unregister_should_raise_error_when_not_in_register(self):
+        site.unregister(self.Model)
+        with self.assertRaises(ModelIsNotInRegisterError):
+            site.unregister(self.Model)
+
+
+class DedalObject(TestCase):
+    def test_actions(self):
+        actions = [ACTION_CREATE]
+        instance = Dedal(Post, actions)
+        for action in actions:
+            self.assertTrue(hasattr(instance, action), action)
+
+        for action in set(ACTIONS) - set(actions):
+            self.assertFalse(hasattr(instance, action), action)
+
+
+@ddt
+class TestBlogViews(TestCase):
+    @unpack
+    @data(
+        ('post_read', 404),
+        ('post_create', 200, False),
+        ('post_read', 404),
+        ('post_update', 404),
+        ('post_delete', 404),
+    )
+    def test_urls(self, name, code, args=True):
+        args = (0,) if args else ()
+        url = reverse(name, args=args)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, code)
+
+    def test_list_view(self):
+        url = reverse('post_list')
+        response = self.client.get(url)

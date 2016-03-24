@@ -1,3 +1,4 @@
+#!/bin/env python
 import sys
 
 try:
@@ -11,12 +12,13 @@ try:
                 "ENGINE": "django.db.backends.sqlite3",
             }
         },
-        ROOT_URLCONF="dedal.urls",
+        ROOT_URLCONF="example.example.urls",
         INSTALLED_APPS=[
             "django.contrib.auth",
             "django.contrib.contenttypes",
             "django.contrib.sites",
             "dedal",
+            "example.blog",
         ],
         SITE_ID=1,
         NOSE_ARGS=['-s'],

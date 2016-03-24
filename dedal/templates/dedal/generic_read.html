@@ -3,7 +3,8 @@
 {% load i18n dedal_tags %}
 
 {% block content %}
-	{% for name, value in fields.items %}
+    <a href="{% crud object 'list' %}">{% trans 'Back to list' %}</a>
+    {% for name, value in fields.items %}
 		{{ name }} {{ value }}
 	{% endfor %}
 		<a href="{% crud object 'update' %}">{% trans "Update" %}</a> <a href="{% crud object 'delete' %}">{% trans "Delete" %}</a>

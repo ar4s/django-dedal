@@ -11,7 +11,7 @@
 				<a href="{% crud object 'delete' %}">{% trans 'Delete' %}</a>
 			</li>
 		{% empty %}
-			<p>Nothing to display.</p>
+			<p>{% trans 'Nothing to display.' %}</p>
 		{% endfor %}
 		<a href="{% crud model 'create' %}">{% blocktrans %}Create {{ verbose_name }}{% endblocktrans %}</a>
 	</ul>

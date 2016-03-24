@@ -4,7 +4,7 @@
 import os
 import sys
 
-from dedal.version import __version__ as version
+version = '0.1.0'
 
 try:
     from setuptools import setup

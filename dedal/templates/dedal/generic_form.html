@@ -1,11 +1,12 @@
 {% extends 'dedal/base.html' %}
 
-{% load i18n %}
+{% load i18n dedal_tags %}
 
 {% block content %}
 	<form method="POST">
 		{% csrf_token %}
 		{{ form }}
-		<button>{% trans "Update" %}</button>
+        <button>{% block button_label %}{% endblock %}</button>
+		<a href="{% crud model 'list' %}">{% trans 'Cancel' %}</a>
 	</form>
 {% endblock %}

@@ -1,0 +1,2 @@
+class ModelIsNotInRegisterError(Exception):
+    pass

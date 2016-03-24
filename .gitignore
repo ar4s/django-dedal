@@ -9,6 +9,8 @@
 dist
 build
 eggs
+.eggs
+htmlcov/
 parts
 bin
 var
