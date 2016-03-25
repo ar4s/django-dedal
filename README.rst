@@ -18,6 +18,11 @@ Documentation
 
 The full documentation is at https://django-dedal.readthedocs.org.
 
+Demo
+----
+
+Example project is available on http://django-dedal.herokuapp.com/.
+
 Quickstart
 ----------
 
@@ -25,11 +30,39 @@ Install django-dedal::
 
     pip install django-dedal
 
-Then use it in a project::
+Then use it in a Django project simple add ``dedal`` and ``bootstrapform`` (if you want use bootstrap) to ``INSTALLED_APPS``::
 
-    import django-dedal
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        ...
+        'dedal',
+        'bootstrapform',
+    )
 
-Features
---------
+After this decorate your model by ``@crud``::
 
-* TODO
+    from django.db import models
+
+    from dedal.decorators import crud
+
+
+    @crud
+    class Post(models.Model):
+        title = models.CharField(max_length=50)
+        body = models.TextField()
+        comments = models.ManyToManyField('Comment', blank=True)
+
+        def __str__(self):
+            return '{}'.format(self.title)
+
+That's all!
+
+TODO
+----
+* pagination
+* select related
