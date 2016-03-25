@@ -13,3 +13,12 @@ def crud(obj, action):
     if action in ACTIONS_REQUIRED_OBJ:
         args = [obj.pk]
     return reverse('{}_{}'.format(obj_name, action), args=args)
+
+
+register.filter(
+    'verbose_name_plural', lambda x: x._meta.verbose_name_plural
+)
+
+register.filter(
+    'repr', lambda x: repr(x)
+)

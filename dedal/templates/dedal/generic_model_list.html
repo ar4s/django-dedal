@@ -1,0 +1,23 @@
+{% extends 'dedal/base.html' %}
+
+{% load i18n dedal_tags %}
+
+{% block content %}
+    <h2>
+        {% trans 'Model list' %}
+    </h2>
+    <ul class="list-group">
+        {% for model in models %}
+            <li class="list-group-item">
+                <a href="{% crud model 'list' %}">{{ model|verbose_name_plural|title }}</a>
+                <div class="pull-right">
+                    <a class="btn btn-success btn-xs" href="{% crud model 'create' %}" title="{% blocktrans %}Create {{ verbose_name }}{% endblocktrans %}">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </li>
+        {% empty %}
+            <p>{% trans 'Nothing to display.' %}</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,1 +1,24 @@
 {% extends 'base.html' %}
+
+{% load dedal_tags %}
+
+{% block nav %}
+	<nav class="navbar navbar-inverse navbar">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="{% url 'dedal_main' %}">Django Dedal</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					{% for item in models %}
+						<li{% if model|repr == item|repr %} class="active"{% endif %}>
+							<a href="{% crud item 'list' %}">
+								{{ item|verbose_name_plural|title }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+{% endblock %}

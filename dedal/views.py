@@ -1,10 +1,12 @@
+from django.db.models.fields import Field
 from django.core.urlresolvers import reverse
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
     ListView,
-    UpdateView
+    UpdateView,
+    TemplateView
 )
 
 from django.forms.models import model_to_dict
@@ -13,6 +15,7 @@ from django.forms.models import model_to_dict
 class DedalBaseMixin(object):
     action_name = None
     model = None
+    site = None
 
     @property
     def model_name(self):
@@ -26,8 +29,12 @@ class DedalBaseMixin(object):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
-        context['verbose_name'] = self.model._meta.verbose_name
+        context['models'] = self.site.registered_models
         return context
+
+
+class ModelListView(DedalBaseMixin, TemplateView):
+    template_name = 'dedal/generic_model_list.html'
 
 
 class DedalListView(DedalBaseMixin, ListView):
@@ -45,7 +52,11 @@ class DedalModelFormMixin(object):
     @property
     def fields(self):
         # TODO: blacklist, editable from field
-        return self.model._meta.get_all_field_names()
+        return [
+            field.name
+            for field in self.model._meta.get_fields()
+            if isinstance(field, Field)
+        ]
 
 
 class DedalUpdateView(

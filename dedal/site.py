@@ -7,6 +7,7 @@ from dedal.views import (
     DedalListView,
     DedalReadView,
     DedalUpdateView,
+    ModelListView
 )
 from dedal.exceptions import ModelIsNotInRegisterError
 
@@ -18,7 +19,8 @@ class Dedal(object):
     create_view_class = DedalCreateView
     delete_view_class = DedalDeleteView
 
-    def __init__(self, model, actions):
+    def __init__(self, parent, model, actions):
+        self.parent = parent
         self.actions = actions
         self.model = model
         self.add_views_to_class(actions)
@@ -32,7 +34,8 @@ class Dedal(object):
             if get_class_view:
                 class_view = get_class_view()
             setattr(self, action, class_view.as_view(
-                model=self.model, action_name=action
+                model=self.model, action_name=action,
+                site=self.parent
             ))
 
     @property
@@ -56,7 +59,11 @@ class DedalSite(object):
         self._register = {}
 
     def register(self, model, actions):
-        self._register[model] = Dedal(model, actions)
+        self._register[model] = Dedal(self, model, actions)
+
+    @property
+    def registered_models(self):
+        return set(self._register.keys())
 
     def unregister(self, model):
         if not self.is_registered(model):
@@ -68,7 +75,9 @@ class DedalSite(object):
         return model in list(self._register)
 
     def get_urls(self):
-        urlpatterns = []
+        urlpatterns = [
+            url(r'^$', ModelListView.as_view(site=self), name='dedal_main')
+        ]
         for model, dedal in self._register.items():
             urlpatterns += [
                 url(r'^{}'.format(
@@ -80,6 +89,5 @@ class DedalSite(object):
     @property
     def urls(self):
         return self.get_urls()
-
 
 site = DedalSite()
