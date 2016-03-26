@@ -2,18 +2,17 @@ sudo: false
 language: python
 python:
   - "3.4"
-  - "2.7"
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
   - pip install -e .
-  - python setup.py test
+  - pip install nose django_nose ddt
+  - pip install python-coveralls
   - pip install tox-travis
 
-script: tox
+script:
+  - tox
+  - coverage run --source dedal runtests.py
 
-# command to run tests using coverage, e.g. python setup.py test
-# script: coverage run --source dedal runtests.py
-
-# report coverage to coveralls.io
-# after_success: coveralls
+after_success:
+  - coveralls

@@ -17,12 +17,15 @@ try:
             "django.contrib.auth",
             "django.contrib.contenttypes",
             "django.contrib.sites",
+            "django.contrib.staticfiles",
             "dedal",
             "example.blog",
+            "bootstrapform",
         ],
         SITE_ID=1,
         NOSE_ARGS=['-s'],
         MIDDLEWARE_CLASSES=(),
+        STATIC_URL='/static/'
     )
 
     try:

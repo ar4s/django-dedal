@@ -36,7 +36,7 @@ class TestDedalSiteRegistry(TestCase):
 class DedalObject(TestCase):
     def test_actions(self):
         actions = [ACTION_CREATE]
-        instance = Dedal(Post, actions)
+        instance = Dedal(site, Post, actions)
         for action in actions:
             self.assertTrue(hasattr(instance, action), action)
 
