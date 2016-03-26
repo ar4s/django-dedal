@@ -80,7 +80,7 @@ class DedalSite(object):
         ]
         for model, dedal in self._register.items():
             urlpatterns += [
-                url(r'^{}'.format(
+                url(r'^{}/'.format(
                     model.__name__.lower()
                 ), include(dedal.urls))
             ]
