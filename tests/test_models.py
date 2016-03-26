@@ -63,3 +63,4 @@ class TestBlogViews(TestCase):
     def test_list_view(self):
         url = reverse('post:list')
         response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

@@ -5,9 +5,8 @@ from dedal.site import site
 
 
 def register(model=None, actions=ACTIONS):
-    # TODO: check this
-    # if not model:
-    #     return functools.partial(register, actions=actions)
+    if not model:
+        return functools.partial(register, actions=actions)
     site.register(model, actions)
     return model
 
