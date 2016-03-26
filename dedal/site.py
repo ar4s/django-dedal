@@ -44,14 +44,14 @@ class Dedal(object):
 
     @property
     def urls(self):
-        return ([
+        return [
             url(
                 ACTIONS_RE[action],
                 getattr(self, action),
                 name=action
             )
             for action in self.actions
-        ], self.model_name)
+        ]
 
 
 class DedalSite(object):
@@ -82,7 +82,7 @@ class DedalSite(object):
             urlpatterns += [
                 url(r'^{}/'.format(
                     model.__name__.lower()
-                ), include(dedal.urls))
+                ), include(dedal.urls, dedal.model_name))
             ]
         return urlpatterns
 
