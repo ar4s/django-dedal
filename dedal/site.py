@@ -44,14 +44,14 @@ class Dedal(object):
 
     @property
     def urls(self):
-        return [
+        return ([
             url(
                 ACTIONS_RE[action],
                 getattr(self, action),
-                name='{}_{}'.format(self.model_name, action)
+                name=action
             )
             for action in self.actions
-        ]
+        ], self.model_name)
 
 
 class DedalSite(object):

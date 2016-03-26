@@ -12,7 +12,7 @@ def crud(obj, action):
     args = []
     if action in ACTIONS_REQUIRED_OBJ:
         args = [obj.pk]
-    return reverse('{}_{}'.format(obj_name, action), args=args)
+    return reverse('{}:{}'.format(obj_name, action), args=args)
 
 
 register.filter(

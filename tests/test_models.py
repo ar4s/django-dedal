@@ -48,11 +48,11 @@ class DedalObject(TestCase):
 class TestBlogViews(TestCase):
     @unpack
     @data(
-        ('post_read', 404),
-        ('post_create', 200, False),
-        ('post_read', 404),
-        ('post_update', 404),
-        ('post_delete', 404),
+        ('post:list', 200, False),
+        ('post:read', 404),
+        ('post:create', 200, False),
+        ('post:update', 404),
+        ('post:delete', 404),
     )
     def test_urls(self, name, code, args=True):
         args = (0,) if args else ()
@@ -61,5 +61,5 @@ class TestBlogViews(TestCase):
         self.assertEqual(response.status_code, code)
 
     def test_list_view(self):
-        url = reverse('post_list')
+        url = reverse('post:list')
         response = self.client.get(url)
