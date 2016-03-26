@@ -53,7 +53,7 @@ setup(
     zip_safe=False,
     keywords='django-dedal',
     classifiers=[
-        'Development Status :: 5 - Production/Stable'
+        'Development Status :: 5 - Production/Stable',
         'Framework :: Django',
         'Framework :: Django :: 1.6',
         'Framework :: Django :: 1.7',
