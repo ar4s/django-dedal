@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from ddt import data, ddt, unpack
-
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from dedal import ACTIONS, ACTION_CREATE
@@ -42,25 +39,3 @@ class DedalObject(TestCase):
 
         for action in set(ACTIONS) - set(actions):
             self.assertFalse(hasattr(instance, action), action)
-
-
-@ddt
-class TestBlogViews(TestCase):
-    @unpack
-    @data(
-        ('post:list', 200, False),
-        ('post:read', 404),
-        ('post:create', 200, False),
-        ('post:update', 404),
-        ('post:delete', 404),
-    )
-    def test_urls(self, name, code, args=True):
-        args = (0,) if args else ()
-        url = reverse(name, args=args)
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, code)
-
-    def test_list_view(self):
-        url = reverse('post:list')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)

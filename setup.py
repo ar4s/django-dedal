@@ -30,10 +30,7 @@ requirements = [
     'django-bootstrap-form==3.2',
     'wheel==0.24.0',
 ]
-test_requirements = [
-    'nose',
-    'django_nose',
-]
+test_requirements = read('requirements-test.txt').splitlines()
 
 setup(
     name='django-dedal',
