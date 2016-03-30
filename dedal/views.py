@@ -69,7 +69,7 @@ class DedalUpdateView(
 
     def get_success_url(self):
         return reverse(
-            '{}_read'.format(
+            '{}:read'.format(
                 self.model_name
             ), args=(self.object.pk,)
         )
@@ -82,7 +82,7 @@ class DedalCreateView(
 ):
     def get_success_url(self):
         return reverse(
-            '{}_read'.format(
+            '{}:read'.format(
                 self.model_name
             ), args=(self.object.pk,)
         )
@@ -97,4 +97,4 @@ class DedalDeleteView(
     model = None
 
     def get_success_url(self):
-        return reverse('{}_list'.format(self.model_name))
+        return reverse('{}:list'.format(self.model_name))
