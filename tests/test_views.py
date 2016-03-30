@@ -1,9 +1,27 @@
+import sys
 from ddt import data, ddt, unpack
+from django.conf import settings
+from imp import reload
+from importlib import import_module
 
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import clear_url_caches, reverse, NoReverseMatch
 from django.test import TestCase
 
+from dedal import ACTIONS, ACTION_CREATE, ACTIONS_REQUIRED_OBJ
+from dedal.decorators import crud
 from example.blog.models import Post
+
+
+class FooModel(object):
+    class _meta:  # noqa
+        model_name = 'foo'
+
+
+def reload_urlconf():
+    clear_url_caches()
+    if settings.ROOT_URLCONF in sys.modules:
+        reload(sys.modules[settings.ROOT_URLCONF])
+    return import_module(settings.ROOT_URLCONF)
 
 
 @ddt
@@ -40,3 +58,32 @@ class TestBlogViews(TestCase):
         expected = 'Lorem ipsum'
         url = reverse('post:create')
         self.client.post(url, {'title': expected, 'body': expected})
+
+
+@ddt
+class TestActionsViews(TestCase):
+    @classmethod
+    def tearDownClass(cls):
+        crud(Post)
+        reload_urlconf()
+
+    @unpack
+    @data(
+        ([ACTION_CREATE],),
+    )
+    def test_specified_actions(self, actions):
+        post = Post.objects.create(title='test', body='test')
+        crud(Post, actions)
+        for action in ACTIONS:
+            reload_urlconf()
+            args = ()
+            if action in ACTIONS_REQUIRED_OBJ:
+                args = (post.pk,)
+            if action in actions:
+                response = self.client.get(
+                    reverse('post:{}'.format(action), args=args)
+                )
+                self.assertEqual(response.status_code, 200)
+            else:
+                with self.assertRaises(NoReverseMatch):
+                    reverse('post:{}'.format(action), args=args)

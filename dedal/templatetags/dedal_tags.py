@@ -2,6 +2,7 @@ from django import template
 from django.core.urlresolvers import reverse
 
 from dedal import ACTIONS_REQUIRED_OBJ
+from dedal.site import site
 
 register = template.Library()
 
@@ -10,6 +11,8 @@ register = template.Library()
 def crud(obj, action):
     obj_name = obj._meta.model_name
     args = []
+    if action not in site.get_actions(obj):
+        return '#not_found'
     if action in ACTIONS_REQUIRED_OBJ:
         args = [obj.pk]
     return reverse('{}:{}'.format(obj_name, action), args=args)

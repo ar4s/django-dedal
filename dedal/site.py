@@ -61,6 +61,11 @@ class DedalSite(object):
     def register(self, model, actions):
         self._register[model] = Dedal(self, model, actions)
 
+    def get_actions(self, model):
+        if not self.is_registered(model):
+            return []
+        return self._register[model].actions
+
     @property
     def registered_models(self):
         return set(self._register.keys())
