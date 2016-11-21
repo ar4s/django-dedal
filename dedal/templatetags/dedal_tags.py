@@ -11,7 +11,7 @@ register = template.Library()
 def crud(obj, action):
     obj_name = obj._meta.model_name
     args = []
-    if action not in site.get_actions(obj):
+    if action not in site.get_actions(obj.__class__):
         return '#not_found'
     if action in ACTIONS_REQUIRED_OBJ:
         args = [obj.pk]
