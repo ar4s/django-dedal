@@ -20,12 +20,28 @@ try:
             "django.contrib.staticfiles",
             "dedal",
             "example.blog",
-            "bootstrapform",
         ],
         SITE_ID=1,
         NOSE_ARGS=['-s'],
         MIDDLEWARE_CLASSES=(),
-        STATIC_URL='/static/'
+        STATIC_URL='/static/',
+        TEMPLATES=[  # for Django >= 1.11
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'APP_DIRS': True,
+                'OPTIONS': {
+                    'context_processors': [
+                        'django.contrib.auth.context_processors.auth',
+                        'django.template.context_processors.debug',
+                        'django.template.context_processors.i18n',
+                        'django.template.context_processors.media',
+                        'django.template.context_processors.static',
+                        'django.template.context_processors.tz',
+                        'django.contrib.messages.context_processors.messages',
+                    ],
+                },
+            },
+        ]
     )
 
     try:

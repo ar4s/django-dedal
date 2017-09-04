@@ -27,8 +27,7 @@ readme = read('README.rst')
 history = read('HISTORY.rst').replace('.. :changelog:', '')
 requirements = [
     'django>=1.8',
-    'django-bootstrap-form==3.2',
-    'wheel==0.24.0',
+    'wheel',
 ]
 test_requirements = read('requirements-test.txt').splitlines()
 

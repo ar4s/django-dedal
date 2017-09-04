@@ -1,12 +1,12 @@
 {% extends 'dedal/base.html' %}
 
-{% load i18n dedal_tags bootstrap %}
+{% load i18n dedal_tags %}
 
 {% block content %}
 	<form role="form" method="POST">
 		<legend>{% block legend_title %}{% endblock %}</legend>
 		{% csrf_token %}
-		{{ form|bootstrap }}
+		{{ form }}
 		<button class="btn btn-success">{% block button_label %}{% endblock %}</button>
 		<a class="btn btn-danger" href="javascript:history.back()">{% trans 'Cancel' %}</a>
 	</form>
