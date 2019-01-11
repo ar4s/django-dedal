@@ -10,6 +10,8 @@ python:
   - DJANGO_VERSION=1.9
   - DJANGO_VERSION=1.10
   - DJANGO_VERSION=1.11
+  - DJANGO_VERSION=2.0
+  - DJANGO_VERSION=2.1
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:

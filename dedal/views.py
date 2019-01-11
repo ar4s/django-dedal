@@ -1,5 +1,4 @@
 from django.db.models.fields import Field
-from django.core.urlresolvers import reverse
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -10,6 +9,8 @@ from django.views.generic import (
 )
 
 from django.forms.models import model_to_dict
+
+from dedal.compat import reverse
 
 
 class DedalBaseMixin(object):

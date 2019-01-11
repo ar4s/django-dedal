@@ -1,7 +1,7 @@
 from django import template
-from django.core.urlresolvers import reverse
 
 from dedal import ACTIONS_REQUIRED_OBJ
+from dedal.compat import reverse
 from dedal.site import site
 
 register = template.Library()
