@@ -87,7 +87,7 @@ class DedalSite(object):
             urlpatterns += [
                 url(r'^{}/'.format(
                     model.__name__.lower()
-                ), include(dedal.urls, dedal.model_name))
+                ), include((dedal.urls, 'dedal'), dedal.model_name))
             ]
         return urlpatterns
 

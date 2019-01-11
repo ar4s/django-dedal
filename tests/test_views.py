@@ -4,10 +4,10 @@ from django.conf import settings
 from imp import reload
 from importlib import import_module
 
-from django.core.urlresolvers import clear_url_caches, reverse, NoReverseMatch
 from django.test import TestCase
 
 from dedal import ACTIONS, ACTION_CREATE, ACTIONS_REQUIRED_OBJ
+from dedal.compat import clear_url_caches, reverse, NoReverseMatch
 from dedal.decorators import crud
 from example.blog.models import Post
 
