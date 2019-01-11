@@ -3,6 +3,11 @@
 History
 -------
 
+1.1.0 (2018-01-11)
+++++++++++++++++++
++ add support for Django 2.x
++ drop support for Django 1.8 and Python 3.4
++ fix CI
 
 1.0.1 (2016-03-30)
 ++++++++++++++++++
