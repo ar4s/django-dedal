@@ -20,7 +20,3 @@ if RUN_ON_HEROKU:
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
 application = get_wsgi_application()
-
-if RUN_ON_HEROKU:
-    from whitenoise.django import DjangoWhiteNoise
-    application = DjangoWhiteNoise(application)
