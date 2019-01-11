@@ -6,7 +6,7 @@
 	<form role="form" method="POST">
 		<legend>{% block legend_title %}{% endblock %}</legend>
 		{% csrf_token %}
-		{{ form }}
+		{% block form %}{{ form }}{% endblock %}
 		<button class="btn btn-success">{% block button_label %}{% endblock %}</button>
 		<a class="btn btn-danger" href="javascript:history.back()">{% trans 'Cancel' %}</a>
 	</form>

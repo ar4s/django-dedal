@@ -5,6 +5,7 @@ History
 
 1.1.0 (2018-01-11)
 ++++++++++++++++++
++ add pagination
 + add support for Django 2.x
 + drop support for Django 1.8 and Python 3.4
 + fix CI

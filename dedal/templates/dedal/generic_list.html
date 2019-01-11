@@ -4,7 +4,7 @@
 
 {% block content %}
 	<h2>
-		{{ model|verbose_name_plural|title }}
+		{{ model|verbose_name_plural|title }} <small>total: {{ object_list.count }}</small>
 		<a class="btn btn-success" href="{% crud model 'create' %}" title="{% blocktrans %}Create {{ verbose_name }}{% endblocktrans %}">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</a>
@@ -28,4 +28,5 @@
 			<p>{% trans 'Nothing to display.' %}</p>
 		{% endfor %}
 	</ul>
+	{% include 'dedal/_pagination.html' %}
 {% endblock %}

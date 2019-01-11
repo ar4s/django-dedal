@@ -11,10 +11,6 @@ django-dedal
 .. image:: https://img.shields.io/travis/ar4s/django-dedal.svg?style=flat-square
     :target: https://travis-ci.org/ar4s/django-dedal
 
-
-.. image:: https://img.shields.io/codacy/3280ce639e6442ed809a817d2e20de17.svg?style=flat-square
-    :target: https://www.codacy.com/app/arkadiusz-adamski/django-dedal
-
 .. image:: https://img.shields.io/coveralls/ar4s/django-dedal.svg?style=flat-square
     :target: https://coveralls.io/r/ar4s/django-dedal?branch=master
 
@@ -71,5 +67,4 @@ That's all!
 
 TODO
 ----
-* pagination
 * select related

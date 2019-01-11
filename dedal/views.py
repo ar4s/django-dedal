@@ -9,6 +9,7 @@ from django.views.generic import (
 )
 from django.forms.models import model_to_dict
 
+from dedal.conf import PAGINATE_BY
 from dedal.compat import reverse
 
 
@@ -38,7 +39,7 @@ class ModelListView(DedalBaseMixin, TemplateView):
 
 
 class DedalListView(DedalBaseMixin, ListView):
-    pass
+    paginate_by = PAGINATE_BY
 
 
 class DedalReadView(DedalBaseMixin, DetailView):
