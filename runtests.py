@@ -3,7 +3,6 @@ import sys
 
 try:
     from django.conf import settings
-
     settings.configure(
         DEBUG=True,
         USE_TZ=True,
@@ -41,7 +40,7 @@ try:
                     ],
                 },
             },
-        ]
+        ],
     )
 
     try:

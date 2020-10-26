@@ -26,7 +26,7 @@ def read(filename):
 readme = read('README.rst')
 history = read('HISTORY.rst').replace('.. :changelog:', '')
 requirements = [
-    'django>=1.8,<2.2',
+    'django>=2.2.13,<3.0',
     'wheel',
 ]
 test_requirements = read('requirements-test.txt').splitlines()
