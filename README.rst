@@ -47,6 +47,16 @@ Then use it in a Django project simple add ``dedal`` and ``bootstrapform`` (if y
         'bootstrapform',
     )
 
+Add a new pattern to ``urls.py``::
+
+    from dedal.site import site as dedal_site
+    ...
+
+    urlpatterns = [
+        ...
+        url(r"^", include(dedal_site.urls)),
+    ]
+
 After this decorate your model by ``@crud``::
 
     from django.db import models
