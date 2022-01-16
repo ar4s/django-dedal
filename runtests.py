@@ -3,6 +3,7 @@ import sys
 
 try:
     from django.conf import settings
+
     settings.configure(
         DEBUG=True,
         USE_TZ=True,
@@ -19,32 +20,34 @@ try:
             "django.contrib.staticfiles",
             "dedal",
             "example.blog",
+            "django_nose",
         ],
         SITE_ID=1,
-        NOSE_ARGS=['-s'],
-        MIDDLEWARE_CLASSES=(),
-        STATIC_URL='/static/',
+        NOSE_ARGS=["-s"],
+        STATIC_URL="/static/",
         TEMPLATES=[  # for Django >= 1.11
             {
-                'BACKEND': 'django.template.backends.django.DjangoTemplates',
-                'APP_DIRS': True,
-                'OPTIONS': {
-                    'context_processors': [
-                        'django.contrib.auth.context_processors.auth',
-                        'django.template.context_processors.debug',
-                        'django.template.context_processors.i18n',
-                        'django.template.context_processors.media',
-                        'django.template.context_processors.static',
-                        'django.template.context_processors.tz',
-                        'django.contrib.messages.context_processors.messages',
+                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "APP_DIRS": True,
+                "OPTIONS": {
+                    "context_processors": [
+                        "django.contrib.auth.context_processors.auth",
+                        "django.template.context_processors.debug",
+                        "django.template.context_processors.i18n",
+                        "django.template.context_processors.media",
+                        "django.template.context_processors.static",
+                        "django.template.context_processors.tz",
+                        "django.contrib.messages.context_processors.messages",
                     ],
                 },
             },
         ],
+        TEST_RUNNER="django_nose.NoseTestSuiteRunner",
     )
 
     try:
         import django
+
         setup = django.setup
     except AttributeError:
         pass
@@ -54,13 +57,14 @@ try:
     from django_nose import NoseTestSuiteRunner
 except ImportError:
     import traceback
+
     traceback.print_exc()
     raise ImportError("To fix this error, run: pip install -r requirements-test.txt")
 
 
 def run_tests(*test_args):
     if not test_args:
-        test_args = ['tests']
+        test_args = ["tests"]
 
     # Run tests
     test_runner = NoseTestSuiteRunner(verbosity=1)
@@ -71,5 +75,5 @@ def run_tests(*test_args):
         sys.exit(failures)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_tests(*sys.argv[1:])

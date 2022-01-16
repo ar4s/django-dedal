@@ -1,15 +1,15 @@
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 
 from dedal import ACTIONS_RE
+from dedal.exceptions import ModelIsNotInRegisterError
 from dedal.views import (
     DedalCreateView,
     DedalDeleteView,
     DedalListView,
     DedalReadView,
     DedalUpdateView,
-    ModelListView
+    ModelListView,
 )
-from dedal.exceptions import ModelIsNotInRegisterError
 
 
 class Dedal(object):
@@ -27,16 +27,17 @@ class Dedal(object):
 
     def add_views_to_class(self, actions):
         for action in actions:
-            class_view = getattr(self, '{}_view_class'.format(action))
-            get_class_view = getattr(
-                self, 'get_{}_view_class'.format(action), None
-            )
+            class_view = getattr(self, "{}_view_class".format(action))
+            get_class_view = getattr(self, "get_{}_view_class".format(action), None)
             if get_class_view:
                 class_view = get_class_view()
-            setattr(self, action, class_view.as_view(
-                model=self.model, action_name=action,
-                site=self.parent
-            ))
+            setattr(
+                self,
+                action,
+                class_view.as_view(
+                    model=self.model, action_name=action, site=self.parent
+                ),
+            )
 
     @property
     def model_name(self):
@@ -45,11 +46,7 @@ class Dedal(object):
     @property
     def urls(self):
         return [
-            url(
-                ACTIONS_RE[action],
-                getattr(self, action),
-                name=action
-            )
+            url(ACTIONS_RE[action], getattr(self, action), name=action)
             for action in self.actions
         ]
 
@@ -80,19 +77,19 @@ class DedalSite(object):
         return model in list(self._register)
 
     def get_urls(self):
-        urlpatterns = [
-            url(r'^$', ModelListView.as_view(site=self), name='dedal_main')
-        ]
+        urlpatterns = [url(r"^$", ModelListView.as_view(site=self), name="dedal_main")]
         for model, dedal in self._register.items():
             urlpatterns += [
-                url(r'^{}/'.format(
-                    model.__name__.lower()
-                ), include((dedal.urls, 'dedal'), dedal.model_name))
+                url(
+                    r"^{}/".format(model.__name__.lower()),
+                    include((dedal.urls, "dedal"), dedal.model_name),
+                )
             ]
         return urlpatterns
 
     @property
     def urls(self):
         return self.get_urls()
+
 
 site = DedalSite()
